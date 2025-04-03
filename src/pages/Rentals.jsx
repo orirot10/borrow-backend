@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { GoogleMap, Marker } from '@react-google-maps/api';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import axios from 'axios';
-import logo from './logo4.png';
+import logo from './logo5.png';
 import './Rentals.css';
 
 function Rentals() {
@@ -158,9 +158,7 @@ function Rentals() {
 
       <div className="content-wrapper">
         <header className="header">
-          <p className="intro-text">
-            {language === 'he' ? 'לכל אחד יש מה לתת' : 'Everyone has something to give.'}
-          </p>
+
           {showTutorial && (
             <div className="tutorial">
               <p>{language === 'he' ? 'לחץ על מפה או רשימה כדי להתחיל!' : 'Click Map or List to start!'}</p>
@@ -183,18 +181,16 @@ function Rentals() {
           <button className="search-button" onClick={handleSearch}>
             {language === 'he' ? 'חפש' : 'Search'}
           </button>
-          <button className="save-search-button" onClick={saveSearch}>
-            {language === 'he' ? 'שמור' : 'Save'}
-          </button>
+
         </div>
 
         <div className="controls">
         <div className="category-filter">
-  {categories.map((category) => (
-    <button
-      key={category.id}
-      className={`category-button ${selectedCategories.includes(category.id) ? 'active' : ''}`}
-      onClick={() => {
+        {categories.map((category) => (
+        <button
+        key={category.id}
+        className={`category-button ${selectedCategories.includes(category.id) ? 'active' : ''}`}
+        onClick={() => {
         setSelectedCategories(prev =>
           prev.includes(category.id)
             ? prev.filter(c => c !== category.id)
@@ -329,10 +325,10 @@ function Rentals() {
 
       <nav className="bottom-navbar">
   <ul className="nav-links">
-    <li className="nav-item home">{language === 'he' ? 'דף הבית' : 'Home'}</li>
+    <li className="nav-item home">{language === 'he' ? 'צור קשר' : 'contact'}</li>
     <li className="nav-item rentals">{language === 'he' ? 'השכרות' : 'Rentals'}</li>
     <li className="nav-item services">{language === 'he' ? 'שירותים' : 'Services'}</li>
-    <li className="nav-item contact">{language === 'he' ? 'צור קשר' : 'Contact'}</li>
+    
   </ul>
 </nav>
     </div>
