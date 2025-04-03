@@ -49,8 +49,8 @@ function Search() {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/properties');
-        setProperties(response.data);
+        const response = await axios.get('https://borrow-backend.onrender.com/api/properties');
+                setProperties(response.data);
       } catch (err) {
         console.error('שגיאה בטעינת נכסים:', err);
       }

@@ -32,8 +32,8 @@ function Services() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/services');
-        setServices(response.data);
+        const response = await axios.get('https://borrow-backend.onrender.com/api/services');
+                setServices(response.data);
       } catch (err) {
         console.error('שגיאה בטעינת השירותים:', err);
       }
