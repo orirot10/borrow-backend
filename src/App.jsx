@@ -8,6 +8,7 @@ import Services from './pages/Services';
 import Property from './pages/Property';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import './styles.css';
+import React from 'react';
 
 function App() {
   return (
