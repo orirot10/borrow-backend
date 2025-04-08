@@ -1,7 +1,8 @@
 // src/Home.js
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import { useNavigate } from 'react-router-dom';
+import { getAllRentals } from '../api/rentals';
 import './Home.css';
 
 // Placeholder images for the items (you can replace these with actual image URLs)
@@ -93,9 +94,12 @@ const center = {
 function Home() {
   const navigate = useNavigate();
   const [view, setView] = useState('map');
-  const [viewType, setViewType] = useState('available'); // 'available' or 'needed'
+  const [viewType, setViewType] = useState('available');
   const [selectedItem, setSelectedItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY
@@ -129,7 +133,27 @@ function Home() {
     setSelectedItem(null);
   };
 
-  const currentItems = viewType === 'available' ? availableItems : neededItems;
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const data = await getAllRentals();
+        setItems(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
+  const currentItems = viewType === 'available' 
+    ? items.filter(item => item.type === 'available')
+    : items.filter(item => item.type === 'needed');
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -140,6 +164,7 @@ function Home() {
       {/* Header */}
       <header className="header">
         <h1>RENT ANYTHING</h1>
+        <img src="/logoGiveIt.jpg" alt="GiveIt Logo" className="logo" />
       </header>
 
       {/* Search and Filter Section */}
@@ -170,7 +195,7 @@ function Home() {
             >
               {currentItems.map((item) => (
                 <Marker
-                  key={item.id}
+                  key={item._id}
                   position={item.position}
                   title={item.name}
                   onClick={() => handleItemClick(item)}
@@ -198,7 +223,7 @@ function Home() {
         <div className="list-container">
           {currentItems.map((item) => (
             <div 
-              key={item.id} 
+              key={item._id} 
               className="list-item"
               onClick={() => handleItemClick(item)}
             >

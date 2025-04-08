@@ -147,6 +147,7 @@ function Services() {
       {/* Header */}
       <header className="header">
         <h1>SERVICES</h1>
+        <img src="/logoGiveIt.jpg" alt="GiveIt Logo" className="logo" />
       </header>
 
       {/* Search and Filter Section */}
@@ -181,7 +182,7 @@ function Services() {
               onUnmount={onUnmount}
             >
               {currentServices.map((service) => (
-                <Marker
+            <Marker
                   key={service.id}
                   position={service.position}
                   title={service.name}
